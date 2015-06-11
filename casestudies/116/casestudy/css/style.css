@@ -1,0 +1,263 @@
+<!--
+
+body {
+background-image: url(../images/background.gif);
+background-repeat:repeat-x;
+}
+
+div.dataTables_paginate { float: left; margin: 0; }
+div.dataTables_filter { float: left; margin-left: 100px; }
+
+table.dataTable td {
+    padding: 5px;
+}
+
+.dashboard { background: none repeat scroll 0 0 #5FC26B;
+    border: 1px solid #5FC26B;
+    border-radius: 3px 3px 3px 3px;
+    color: #fff;
+    display: block;
+    margin: 0 6px 0 0;
+    padding: 5px;
+	width:155px;
+}	
+
+.c_status {
+color:#000;
+background:#ccc;
+padding:2px;
+font-size:9px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+a:hover {background-color:#f0fea8;}
+
+#mediabox:hover {background-color:#f0fea8;}
+#mediabox {
+padding:10px
+}
+
+
+#customer_nav a {
+color:#0000FF;
+}
+
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color:red;
+	font-style: italic;	
+	
+}
+
+
+.yellow {
+color: #cc6600;
+font-family: Verdana, Helvetica, sans-serif;
+font-size: 18px;
+line-height: 15px;
+text-decoration: none;
+}
+
+.content_txt
+{
+	color: #000000;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 15px;
+	text-decoration: none;
+}
+
+.content_txt2
+{
+	color:#333333;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 15px;
+	text-decoration: none;
+		font-style:italic;
+	
+
+		
+}
+
+.heading_white
+{
+	color: #ffffff;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 15px;
+	text-decoration:none;
+	font-weight: bold;
+}
+
+
+.link_txt
+{
+	color: #cc6600;	
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 15px;
+	text-decoration: none;
+}
+
+.link_txt_s
+{
+	color: #cc6600;	
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 15px;
+	text-decoration: none;
+}
+
+.content_txt_s
+{
+	color: #000000;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 15px;
+	text-decoration: none;
+}
+
+.link_txt_s:hover
+{
+	color: #de0818;	
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 15px;
+	text-decoration: underline;
+}
+
+.link_txt:hover
+{
+	color: #de0818;	
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 15px;
+	text-decoration: underline;
+}
+
+.inputbox
+{
+	padding:5px;
+	width: 250px;
+	border:1px solid #CCCCCC;
+}
+
+input
+{
+	padding:5px;
+	width: 250px;
+	border:1px solid #CCCCCC;
+}
+
+textarea
+{
+	width: 250px;
+	height: 100px;
+	border:1px solid #CCCCCC;
+}
+
+
+
+.textbox
+{
+	padding:5px;
+	border:1px solid #CCCCCC;
+}
+
+.inputbox_l
+{
+	width: 300px;
+	border:1px solid #CCCCCC;
+}
+
+.inputbox_s
+{
+	width: 80px;
+	border:1px solid #CCCCCC;
+}
+
+.textbox
+{
+	width: 300px;
+	height: 100px;
+	border:1px solid #CCCCCC;
+}
+
+
+.textbox_large
+{
+	width: 500px;
+	height: 300px;
+	border:1px solid #CCCCCC;
+}
+
+.heading
+{
+	color: #000000;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 15px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.dropshadow1{
+	float:left;
+	clear:left;
+	background: url(../images/shadowAlpha.png) no-repeat bottom right !important;
+	background: url(../images/shadow.gif) no-repeat bottom right;
+	margin: 10px 0 10px 10px !important;
+	margin: 10px 0 10px 5px;
+	width: auto;
+}
+.dropshadow1 p{
+	position:relative;
+	bottom:6px;
+	right: 6px;
+	border: 1px solid #899b91;
+	font-size:14px;
+	margin: 0px;
+}
+
+.button{
+	background-color:#fff;
+		border:1px solid #ccc;
+		padding:4px;
+		width:80px;
+		text-decoration:none;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		margin-bottom:10px;
+}
+
+
+.button_s{
+width:50px; 
+padding:2px; 
+background-color:#f3f3f3; 
+border:#cccccc solid 1px
+}
+
+.button:hover{
+background-color:#cccccc; 
+}
+
+.button_s:hover{
+background-color:#cccccc; 
+}
+
+.dropdown{
+width:250px;
+padding:2px; 
+border:#cccccc solid 1px;
+}
+
+.dropdown_s{
+width:125px;
+padding:2px; 
+border:#cccccc solid 1px;
+font-size:12px;
+}
+
+-->

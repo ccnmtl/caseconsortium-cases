@@ -1,0 +1,383 @@
+<head>
+
+<script type="text/javascript" src="com/jquery/jquery-1.2.6.js"></script>
+<script type="text/javascript" src="com/jquery/jquery.validate.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("#form1").validate();
+  });
+  </script>
+
+
+<style type="text/css" media="all">
+@import "css/style.css";
+
+body {
+	background-image: url(images/background.gif);
+	background-repeat: repeat-x;
+}
+
+</style>
+
+
+</head>
+<form class="cmxform" id="form1" method="post" action="https://casestudies.jrn.columbia.edu/casestudy/upload_video.asp" enctype="multipart/form-data">
+<input type="hidden" name="action" value="" />
+<input type="hidden" name="id" value="" />
+<input type="hidden" name="case_id" value="85" />
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" name="parent">
+        <tr> 
+          <td width="20%" valign="top">
+		    
+<form>
+<select name="cases" class="dropdown_s" id="cases" onchange="location.href=this.options[this.selectedIndex].value" style="padding: 5px">
+
+<option  value="index.asp?case_id=119">A Newsroom Divided: Kenya, the Election Crisis, and the Nation Media Group</option>
+
+<option  selected="selected"  value="index.asp?case_id=85">A Woman's Place? Photojournalist Lynsey Addario in Libya</option>
+
+<option  value="index.asp?case_id=23">After the Storms: The South Florida <i>Sun-Sentinel</i> Investigates FEMA</option>
+
+<option  value="index.asp?case_id=118">AllNovaScotia.com: Success or Anomaly?</option>
+
+<option  value="index.asp?case_id=109">¿Amigo o enemigo? Wikileaks y the Guardian </option>
+
+<option  value="index.asp?case_id=17">The Bakersfield <i>Californian</i> and Blogging the Courtroom</option>
+
+<option  value="index.asp?case_id=127">From Compstat to Gov 2.0 Big Data in New York City Management</option>
+
+<option  value="index.asp?case_id=36">But is it News? The <i>New York Times</i> and the International Freedom Center</option>
+
+<option  value="index.asp?case_id=67">Buy It or Make It? The <i>Charlotte Observer</i> and the Associated Press</option>
+
+<option  value="index.asp?case_id=90">Community Savings, or Community Threat? California Policy for Ill and Elderly Inmates</option>
+
+<option  value="index.asp?case_id=111">Can Investigative Journalism Pay?: <i>InvestigateWest</i> and the Nonprofit Model</option>
+
+<option  value="index.asp?case_id=66">Caricatured: <i>Le Monde</i> and the Mohammed Cartoons</option>
+
+<option  value="index.asp?case_id=142">Catalyze Without Offense: <em>Daily Nation Living Magazine</em> and the "Laura" Story</option>
+
+<option  value="index.asp?case_id=15">Charting a Course for Change: Transforming the Albany <i>Times Union </i>in a Wired World</option>
+
+<option  value="index.asp?case_id=132">Chasing the Community Newspaper Rainbow: The <em>Whiteville News Reporter</em> and the Digital Age</option>
+
+<option  value="index.asp?case_id=12">Chemical Fallout: The Milwaukee <i>Journal Sentinel</i> and the BPA Story</option>
+
+<option  value="index.asp?case_id=57">Conflicted: The <i>New York Times</i> and the Bias Question</option>
+
+<option  value="index.asp?case_id=147">Covert Activity: the <em>Washington Post</em>, Edward Snowden and the National Security Agency</option>
+
+<option  value="index.asp?case_id=112">Credible Voice: WHO-Beijing and the SARS Crisis</option>
+
+<option  value="index.asp?case_id=19">Crowdsourcing: Promise or Hazard? Part A: Debate at the Fort Myers, FL, <i>News-Press</i></option>
+
+<option  value="index.asp?case_id=20">Crowdsourcing at the Fort Myers, FL, <i>News-Press</i> Part B: "Help Us Investigate"</option>
+
+<option  value="index.asp?case_id=116">Cumulative or Discrete Numbers: How Should <em>Bloomberg</em> Measure the Bailout?</option>
+
+<option  value="index.asp?case_id=29">Digital Deadline: The St. Louis <i>Post-Dispatch</i> and the Kirkwood Shooting</option>
+
+<option  value="index.asp?case_id=69">Dissonance: The Cleveland <i>Plain Dealer</i> and its Classical Music Critic</option>
+
+<option  value="index.asp?case_id=114">The Elusive Tuberculosis Case: The CDC and Andrew Speaker</option>
+
+<option  value="index.asp?case_id=40">Elusive Story: The <i>Chicago Tribune</i> Examines &quot;No Child Left Behind&quot;</option>
+
+<option  value="index.asp?case_id=31">Elusive Story (dead)</option>
+
+<option  value="index.asp?case_id=130">Fighting for Equality in Education: Student Activism in Post-apartheid South Africa</option>
+
+<option  value="index.asp?case_id=113">Evacuate or Stay? Northshore LIJ and Hurricane Sandy</option>
+
+<option  value="index.asp?case_id=53">The Facebook Conundrum: The New Haven <i>Independent</i> and the Annie Le Murder</option>
+
+<option  value="index.asp?case_id=126">Fighting Blackmail: Khadija Ismayilova and Azerbaijan’s First Family</option>
+
+<option  value="index.asp?case_id=70">Friend or foe? WikiLeaks and the <i>Guardian</i></option>
+
+<option  value="index.asp?case_id=16">From Concept to Story: <i>Time</i> Magazine and "America at 300 Million"</option>
+
+<option  value="index.asp?case_id=2"><i>Frontline</i>'s "The Last Abortion Clinic": What's Fair in a Video World?</option>
+
+<option  value="index.asp?case_id=30">God and Darwin: The <i>York Daily Record</i> and the Intelligent Design Trial</option>
+
+<option  value="index.asp?case_id=84">Grow Your Own? Rice Self-sufficiency in Timor-Leste</option>
+
+<option  value="index.asp?case_id=124">Côte Sud Initiative: Integrated Development in Haiti</option>
+
+<option  value="index.asp?case_id=110">Higher Truth or Just the Facts? <i>Hell and Back Again</i></option>
+
+<option  value="index.asp?case_id=21">Integrity on Deadline: ABC News and the Duke Lacrosse Photographs</option>
+
+<option  value="index.asp?case_id=55">Into the Breach: Should Student Journalists Save Local Political Reporting?</option>
+
+<option  value="index.asp?case_id=68">The Jury is Out: The <i>Long Beach Post</i> and Online Local News</option>
+
+<option  value="index.asp?case_id=148">Just Enough Alarm: GlobalPost and the Syrian Chemical Attack S</option>
+
+<option  value="index.asp?case_id=117">Land Grab or Responsible Development? Oil Palm Concessions in Liberia</option>
+
+<option  value="index.asp?case_id=56">Legal Jeopardy: Clar&iacute;n Group and the Kirchners</option>
+
+<option  value="index.asp?case_id=24">A Life on the Line: The <i>Christian Science Monitor</i> and Jill Carroll</option>
+
+<option  value="index.asp?case_id=37">A Matter of Opinion: The <i>Oregonian</i> Editorial Board and Sam Adams </option>
+
+<option  value="index.asp?case_id=134">Merging Two Worlds?: Reston Dental Arts and American Dental Partners</option>
+
+<option  value="index.asp?case_id=92">Mission vs Safety: OCHA Somalia and the Baidoa Raid</option>
+
+<option  value="index.asp?case_id=18">New England Cable News and the Terry Glenn Story</option>
+
+<option  value="index.asp?case_id=9">New England Cable News and the Terry Glenn Story (Video)</option>
+
+<option  value="index.asp?case_id=28">News or Rumor? <i>Politico</i> and the Edwards Affair </option>
+
+<option  value="index.asp?case_id=51">Not for Profit? The <i>Voice of San Diego</i> Experiment</option>
+
+<option  value="index.asp?case_id=50">&iquest;Periodistas o polic&iacute;as? CONTACTO y la b&uacute;squeda de Paul Schaefer</option>
+
+<option  value="index.asp?case_id=128">Public-Private Partnerships for Green Space in NYC</option>
+
+<option  value="index.asp?case_id=86">Personal Foul? <i>Deadspin</i> and an Iconic Athlete</option>
+
+<option  value="index.asp?case_id=61">Privacidad e Inter&eacute;s P&uacute;blico: La Evidencia Contra Ivins. Segunda Parte.</option>
+
+<option  value="index.asp?case_id=60">Privacidad y el Inter&eacute;s P&uacute;blico: Frederick, MD, <i>News-Post</i> y la Historia de Bruce Ivins. Primera Parte.</option>
+
+<option  value="index.asp?case_id=27">Privacy and the Public Interest: Frederick, MD, <i>News-Post</i> and the Bruce Ivins Story</option>
+
+<option  value="index.asp?case_id=35">Privacy and the Public Interest. Part B: The Case Against Ivins (DEAD)</option>
+
+<option  value="index.asp?case_id=136">Process and Politics: Chinalco and the Resettlement of Morococha</option>
+
+<option  value="index.asp?case_id=25">Public Death, Private Life: Army Major Alan Rogers and the <i> Washington Post</i></option>
+
+<option  value="index.asp?case_id=121">Public Service or Illegal Act? The <i>Weekly Mail</i> and Bugging Staal Burger</option>
+
+<option  value="index.asp?case_id=135">Publishing Pollution Data in China: Ma Jun and the Institute of Public and Environmental Affairs</option>
+
+<option  value="index.asp?case_id=120">Radio Buddu and the Uganda Anti-Homosexuality Bill</option>
+
+<option  value="index.asp?case_id=83">Rating Teachers: a Job for Journalists? The <i>Los Angeles Times</i> and "Value-Added" Analysis</option>
+
+<option  value="index.asp?case_id=115">Reportear una Verdad Explosiva: Boston Globe y los Abusos Sexuales  en la Iglesia Católica</option>
+
+<option  value="index.asp?case_id=49">Reporters or cops? CONTACTO and the search for Paul Schaefer</option>
+
+<option  value="index.asp?case_id=14">Reporting an Explosive Truth: The <i>Boston Globe</i> and Sexual Abuse in the Catholic Church </option>
+
+<option  value="index.asp?case_id=22">Reputations to Lose: BBC versus the Blair Government</option>
+
+<option  value="index.asp?case_id=38">Risky Business: John Harris, Jim VandeHei, and <i>Politico</i> Part A</option>
+
+<option  value="index.asp?case_id=39">Risky Business: John Harris, Jim VandeHei, and <i>Politico</i> Part B: A Winning Model?</option>
+
+<option  value="index.asp?case_id=129">Salvation or Mirage? The <em>New York Times</em> Paywall</option>
+
+<option  value="index.asp?case_id=125">Scientific Method in the Real World: Experience Corps and the Johns Hopkins Study</option>
+
+<option  value="index.asp?case_id=123">Seeking Partners for Press Freedom Media Council of Tanzania and DEFIR</option>
+
+<option  value="index.asp?case_id=1">Settle or fight? <i> Far Eastern Economic Review </i> and Singapore</option>
+
+<option  value="index.asp?case_id=146">Swaziland, HIV and Option B+: What Can We Afford?</option>
+
+<option  value="index.asp?case_id=33">Terror or Accident? <i>Newsday</i> and the Crash of American Airlines Flight 587</option>
+
+<option  value="index.asp?case_id=34">Terror or Accident? <i>Newsday</i> and the Crash of American Airlines Flight 587 (Video)</option>
+
+<option  value="index.asp?case_id=133">The Islanders and the Scientists: Post-tsunami Aid in the Nicobars</option>
+
+<option  value="index.asp?case_id=108">Truthiness: <i>This American Life</i> and the Monologist</option>
+
+<option  value="index.asp?case_id=131">Tortoise or Hare? Fundación Carvajal and Buenaventura</option>
+
+<option  value="index.asp?case_id=122">Spike or Suffer? <i>Jamhuri</i> and the Bribe Offer</option>
+
+<option  value="index.asp?case_id=62">Una Historia Esquiva: El <i>Chicago Tribune</i> y la ley &quot;Que Ning&uacute;n Ni&ntilde;o Quede Atr&aacute;s&quot;</option>
+
+<option  value="index.asp?case_id=54">Voices Behind Bars: National Public Radio and Angola State Prison</option>
+
+<option  value="index.asp?case_id=91">Voluntary or Regulated? The Trans Fat Campaign in New York City</option>
+
+<option  value="index.asp?case_id=87">When BEST Intentions Go Awry: Arsenic Mitigation in Bangladesh</option>
+
+<option  value="index.asp?case_id=43">When the story is us: <i>Miami Herald</i>, <i>Nuevo Herald</i> and Radio Mart&iacute;</option>
+
+<option  value="index.asp?case_id=106">Words of the Dying: CHCH TV and Constable Garrett Styles</option>
+
+<option  value="index.asp?case_id=59">Worth a Thousand Words: The Associated Press and Lance Corporal Joshua Bernard</option>
+
+
+</select>
+<a target="_new" style="text-decoration:none" href="www/index.asp%3Fcase_id=85.html"><input type="button" value="View Case" style="width:70px" class="button"/></a>
+</form>
+<div style="margin-top:20px"></div>
+<a href="index.asp%3Fcase_id=85.html"><img border="0"  height="40" src="images/dashboard.png" /></a>
+<div class="dropshadow1">
+<p>
+<table  width="150" border="0" cellpadding="5" cellspacing="0">
+      
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+       <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>New:</i></td>
+      </tr>
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="case.asp%3Faction=New&amp;case_id=85.html" class="link_txt">Case &raquo;</a></td>
+      </tr>
+
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="page.asp%3Faction=New&amp;case_id=85.html" class="link_txt">Page &raquo;</a></td>
+      </tr>
+    
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="bio.asp%3Faction=New&amp;case_id=85.html" class="link_txt">Biography &raquo;</a></td>
+      </tr>
+      
+      
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="news_controller.asp%3Faction=new&amp;case_id=85.html" class="link_txt">News &raquo;</a></td>
+    </tr>
+
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="video_group.asp%3Faction=New&amp;case_id=85.html" class="link_txt">Video Group &raquo;</a></td>
+      </tr>
+      
+        <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="new_category.asp%3Fcase_id=85.html" class="link_txt">Category &raquo;</a></td>
+      </tr>
+   
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="https://casestudies.jrn.columbia.edu/casestudy/new_course.asp" class="link_txt"></a></td>
+      </tr>
+	
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF">		</td>
+      </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Upload:</i></td>
+      </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_photo.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Photo &raquo;</a></td>
+    </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_audio.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Audio &raquo;</a></td>
+       </tr>
+      <!-- <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="FlashController.asp?case_id=85&amp;action=New" class="link_txt">Flash &raquo;</a></td>
+       </tr>-->
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_video.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Video &raquo;</a></td>
+       </tr>
+    
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_pdf.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">PDF &raquo;</a></td>
+       </tr>
+	   
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF">		</td>
+      </tr>
+	       <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Video Group:</i></td>
+      </tr>
+	  
+	  
+        
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+	      <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading">&nbsp;</td>
+    </tr>	   
+
+
+	   <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Home Page:</i></td>
+      </tr> 
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="featured_cases.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Featured Cases &raquo;</a></td>
+       </tr>
+         
+          <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="featured_news.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Featured News &raquo;</a></td>
+       </tr>
+         
+       
+          <tr bgcolor="#CCCCCC"  class="content_txt">
+            <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading">&nbsp;</td>
+          </tr>
+        <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Sales Tracking:</i></td>
+      </tr> 
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="assign_school.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Assign School &raquo;</a></td>
+       </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="sales_report.asp%3Fcase_id=85&amp;action=New.html" class="link_txt">Sales Report &raquo;</a></td>
+       </tr>
+         
+          <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF">&nbsp;</td>
+       </tr>
+           
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+	      <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading">&nbsp;</td>
+    </tr>	   
+
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="logout.asp.html" class="link_txt">&laquo; Logout</a></td>
+      </tr>
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+      <td bgcolor="#FFFFFF">      </tr>
+</table>
+
+ 
+</div>
+   
+</td>
+          <td valign="top">
+  		<table width="80%" border="0" cellpadding="5" cellspacing="0">
+<tr>
+  <td valign="top">
+  <img border="0" src="images/icon_cases.png" /> &nbsp;&nbsp;<a href="cases.asp%3Fcase_id=85.html" class="link_txt">Cases</a></td>
+  <td valign="top"><img border="0" src="images/icon_story.png" />&nbsp;&nbsp; <a href="pages.asp%3Fcase_id=85.html" class="link_txt"> Pages </a></td>
+  <td valign="top"><img border="0" src="images/icon_profile.png" />&nbsp;&nbsp; <a href="bios.asp%3Fcase_id=85.html" class="link_txt">Bios </a></td>
+  <td valign="top"><img border="0" src="images/icon_category.png" />&nbsp;&nbsp; <a href="categories.asp%3Fcase_id=85.html" class="link_txt">Categories </a></td>
+  <td valign="top"><img border="0" src="images/icon_news.png" />&nbsp; <a href="news.asp%3Fcase_id=85.html" class="link_txt">News </a></td>
+
+  <td valign="top"><img border="0" src="images/icon_user.png" />&nbsp;&nbsp; <a href="customers_outside_faculty.asp%3Fcase_id=85.html" class="link_txt">Customers </a></td>
+    <td valign="top"> <img border="0" src="images/icon_design.png" /> &nbsp;&nbsp;<a href="themes.asp%3Fcase_id=85.html" class="link_txt">Themes </a></td>
+     <td valign="top"> <img border="0" src="images/icon_audio.png" /> &nbsp;&nbsp;<a href="multimedia.asp%3Fcase_id=85.html" class="link_txt">Media </a></td>
+
+    
+     <!-- 
+    <td align="right"><input type="text" size="15" name="textfield" />&nbsp;<img border="0" src="./images/icon_find.png" /></td>
+	-->
+</table>
+
+
+<br />
+  		  <table style="border:1px solid #899b91" width="600" border="0" cellpadding="10" cellspacing="0">
+            <tr bgcolor="white" class="content_txt">
+              <td colspan="2" bgcolor="899b91"><strong class="heading_white">New Video </strong></td>
+            </tr>
+           
+
+            <tr bgcolor="white" class="content_txt">
+              <td align="right" valign="top" bgcolor="f1f5e5">Files: <br /> </td>
+              <td bgcolor="f1f5e5">
+              <INPUT TYPE=FILE SIZE=40 NAME="FILE1" multiple><BR>
+
+              <br /></td>
+            </tr>
+            <tr bgcolor="white" class="content_txt">
+              <td bgcolor="f1f5e5">&nbsp;</td>
+              <td bgcolor="f1f5e5"><input name="Submit"  type="submit" class="button" value="Save"/>
+			    <input onclick="location='multimedia.asp?target=2&case_id=85'" type="button" class="button" value="Cancel"/></td>
+            </tr>
+          </table></td>          
+        </tr>
+  </table>	
+ </td>
+  </tr>
+   
+</table>
+</form>

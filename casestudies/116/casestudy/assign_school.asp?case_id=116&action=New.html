@@ -1,0 +1,1294 @@
+<head>
+
+
+
+ 
+<style type="text/css" media="all">
+@import "css/style.css";
+
+ body {
+	background-image: url(images/background.gif);
+	background-repeat: repeat-x;
+}
+
+</style>
+
+<style type="text/css">
+	
+	
+
+	#dhtmlgoodies_dragDropContainer{	/* Main container for this script */
+		width:890px;	
+		-moz-user-select:none;
+	}
+	#dhtmlgoodies_dragDropContainer ul{	/* General rules for all <ul> */
+		margin-top:0px;
+		margin-left:0px;
+		margin-bottom:0px;
+		padding:0 8px 0 2px;
+	}
+	
+	#dhtmlgoodies_dragDropContainer li,#dragContent li,li#indicateDestination{	/* Movable items, i.e. <LI> */
+		list-style-type:none;
+		height:25px;
+		border: 1px solid #CCCCCC;
+		padding:3px;
+		margin-bottom:5px;
+		cursor:pointer;
+		font-family: Verdana, Helvetica, sans-serif;
+		font-size: 10px;
+		background-color:#FFFFFF;
+		
+	}
+	
+	li#indicateDestination{	/* Box indicating where content will be dropped - i.e. the one you use if you don't use arrow */
+		border:1px solid #317082;	
+		background-color:#FFF;
+	}
+
+	
+	/* LEFT COLUMN CSS */
+	div#dhtmlgoodies_listOfItems{	/* Left column "Available students" */
+		
+		float:left;
+		padding-left:10px;
+		padding-right:10px;
+		
+		/* CSS HACK */
+		width: 280px;	/* IE 5.x */
+		width/* */:/**/260px;	/* Other browsers */
+		width: /**/260px;
+				
+	}
+	#dhtmlgoodies_listOfItems ul{	/* Left(Sources) column <ul> */
+		height:550px;	
+
+	}
+		
+	div#dhtmlgoodies_listOfItems div{
+		background-color:#c6d3c2;	
+		
+	}
+	div#dhtmlgoodies_listOfItems div ul{	/* Left column <ul> */
+		margin-left:10px;	/* Space at the left of list - the arrow will be positioned there */
+	}
+	#dhtmlgoodies_listOfItems div p{	/* Heading above left column */
+		margin:0px;	
+		font-family: Verdana, Helvetica, sans-serif;
+		font-size: 13px;
+		font-weight:bold;
+		padding:3px;
+		background-color:#c6d3c2;
+		color:#43504a;	
+		margin-bottom:5px;
+	}
+	/* END LEFT COLUMN CSS */
+	
+	#dhtmlgoodies_dragDropContainer .mouseover{	/* Mouse over effect DIV box in right column */
+		background-color:#c6d3c2;
+	}
+	
+	/* Start main container CSS */
+	
+	div#dhtmlgoodies_mainContainer{	/* Right column DIV */
+		width:590px;
+		float:left;	
+	}
+	#dhtmlgoodies_mainContainer div{	/* Parent <div> of small boxes */
+		float:left;
+		margin-right:10px;
+		margin-bottom:10px;
+		margin-top:0px;
+		border:1px solid #c6d3c2;
+		background-color:#c6d3c2;
+
+		/* CSS HACK */
+		width: 272px;	/* IE 5.x */
+		width/* */:/**/270px;	/* Other browsers */
+		width: /**/270px;
+				
+	}
+	#dhtmlgoodies_mainContainer div ul{
+		margin-left:10px;
+	}
+	
+	#dhtmlgoodies_mainContainer div p{	/* Heading above small boxes */
+		margin:0px;
+		font-family: Verdana, Helvetica, sans-serif;
+		font-weight:bold;
+		font-size: 13px;
+		padding:3px;
+		background-color:#c6d3c2;	
+		color:#43504a;	
+		margin-bottom:5px;
+	}
+	
+	#dhtmlgoodies_mainContainer ul{	/* Small box in right column ,i.e <ul> */
+		width:252px;
+		height:80px;	
+		border:0px;	
+		margin-bottom:0px;
+		overflow:hidden;
+		
+	}
+	
+	#dragContent{	/* Drag container */
+		position:absolute;
+		width:150px;
+		height:20px;
+		display:none;
+		margin:0px;
+		padding:0px;
+		z-index:2000;
+	}
+
+	#dragDropIndicator{	/* DIV for the small arrow */
+		position:absolute;
+		width:7px;
+		height:10px;
+		display:none;
+		z-index:1000;
+		margin:0px;
+		padding:0px;
+	}
+
+	</style>
+	<style type="text/css" media="print">
+	div#dhtmlgoodies_listOfItems{
+		display:none;
+	}
+	
+
+	#dhtmlgoodies_dragDropContainer{
+		border:0px;
+		width:100%;
+	}
+	</style>	
+	<script type="text/javascript">
+			
+	/* VARIABLES YOU COULD MODIFY */
+	var boxSizeArray = [12];	// Array indicating how many items there is rooom for in the right column ULs
+	
+	var arrow_offsetX = -5;	// Offset X - position of small arrow
+	var arrow_offsetY = 0;	// Offset Y - position of small arrow
+	
+	var arrow_offsetX_firefox = -6;	// Firefox - offset X small arrow
+	var arrow_offsetY_firefox = -13; // Firefox - offset Y small arrow
+	
+	var verticalSpaceBetweenListItems = 3;	// Pixels space between one <li> and next	
+											// Same value or higher as margin bottom in CSS for #dhtmlgoodies_dragDropContainer ul li,#dragContent li
+	
+											
+	var indicateDestionationByUseOfArrow = false;	// Display arrow to indicate where object will be dropped(false = use rectangle)
+
+	var cloneSourceItems = true;	// Items picked from main container will be cloned(i.e. "copy" instead of "cut").	
+	var cloneAllowDuplicates = false;	// Allow multiple instances of an item inside a small box(example: drag Student 1 to team A twice
+	
+	
+	/* END VARIABLES YOU COULD MODIFY */
+	
+	var dragDropTopContainer = false;
+	var dragTimer = -1;
+	var dragContentObj = false;
+	var contentToBeDragged = false;	// Reference to dragged <li>
+	var contentToBeDragged_src = false;	// Reference to parent of <li> before drag started
+	var contentToBeDragged_next = false; 	// Reference to next sibling of <li> to be dragged
+	var destinationObj = false;	// Reference to <UL> or <LI> where element is dropped.
+	var dragDropIndicator = false;	// Reference to small arrow indicating where items will be dropped
+	var ulPositionArray = new Array();
+	var mouseoverObj = false;	// Reference to highlighted DIV
+	
+	var MSIE = navigator.userAgent.indexOf('MSIE')>=0?true:false;
+	var navigatorVersion = navigator.appVersion.replace(/.*?MSIE (\d\.\d).*/g,'$1')/1;
+
+	
+	var indicateDestinationBox = false;
+	function getTopPos(inputObj)
+	{		
+	  var returnValue = inputObj.offsetTop;
+	  while((inputObj = inputObj.offsetParent) != null){
+	  	if(inputObj.tagName!='HTML')returnValue += inputObj.offsetTop;
+	  }
+	  return returnValue;
+	}
+	
+	function getLeftPos(inputObj)
+	{
+	  var returnValue = inputObj.offsetLeft;
+	  while((inputObj = inputObj.offsetParent) != null){
+	  	if(inputObj.tagName!='HTML')returnValue += inputObj.offsetLeft;
+	  }
+	  return returnValue;
+	}
+		
+	function cancelEvent()
+	{
+		return false;
+	}
+	function initDrag(e)	// Mouse button is pressed down on a LI
+	{
+		if(document.all)e = event;
+		var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+		var sl = Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
+		
+		dragTimer = 0;
+		dragContentObj.style.left = e.clientX + sl + 'px';
+		dragContentObj.style.top = e.clientY + st + 'px';
+		contentToBeDragged = this;
+		contentToBeDragged_src = this.parentNode;
+		contentToBeDragged_next = false;
+		if(this.nextSibling){
+			contentToBeDragged_next = this.nextSibling;
+			if(!this.tagName && contentToBeDragged_next.nextSibling)contentToBeDragged_next = contentToBeDragged_next.nextSibling;
+		}
+		timerDrag();
+		return false;
+	}
+	
+	function timerDrag()
+	{
+		if(dragTimer>=0 && dragTimer<10){
+			dragTimer++;
+			setTimeout('timerDrag()',10);
+			return;
+		}
+		if(dragTimer==10){
+			
+			if(cloneSourceItems && contentToBeDragged.parentNode.id=='allItems'){
+				newItem = contentToBeDragged.cloneNode(true);
+				newItem.onmousedown = contentToBeDragged.onmousedown;
+				contentToBeDragged = newItem;
+			}
+			dragContentObj.style.display='block';
+			dragContentObj.appendChild(contentToBeDragged);
+		}
+	}
+	
+	function moveDragContent(e)
+	{
+		if(dragTimer<10){
+			if(contentToBeDragged){
+				if(contentToBeDragged_next){
+					contentToBeDragged_src.insertBefore(contentToBeDragged,contentToBeDragged_next);
+				}else{
+					contentToBeDragged_src.appendChild(contentToBeDragged);
+				}	
+			}
+			return;
+		}
+		if(document.all)e = event;
+		var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+		var sl = Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
+		
+		
+		dragContentObj.style.left = e.clientX + sl + 'px';
+		dragContentObj.style.top = e.clientY + st + 'px';
+		
+		if(mouseoverObj)mouseoverObj.className='';
+		destinationObj = false;
+		dragDropIndicator.style.display='none';
+		if(indicateDestinationBox)indicateDestinationBox.style.display='none';
+		var x = e.clientX + sl;
+		var y = e.clientY + st;
+		var width = dragContentObj.offsetWidth;
+		var height = dragContentObj.offsetHeight;
+		
+		var tmpOffsetX = arrow_offsetX;
+		var tmpOffsetY = arrow_offsetY;
+		if(!document.all){
+			tmpOffsetX = arrow_offsetX_firefox;
+			tmpOffsetY = arrow_offsetY_firefox;
+		}
+
+		for(var no=0;no<ulPositionArray.length;no++){
+			var ul_leftPos = ulPositionArray[no]['left'];	
+			var ul_topPos = ulPositionArray[no]['top'];	
+			var ul_height = ulPositionArray[no]['height'];
+			var ul_width = ulPositionArray[no]['width'];
+			
+			if((x+width) > ul_leftPos && x<(ul_leftPos + ul_width) && (y+height)> ul_topPos && y<(ul_topPos + ul_height)){
+				var noExisting = ulPositionArray[no]['obj'].getElementsByTagName('LI').length;
+				if(indicateDestinationBox && indicateDestinationBox.parentNode==ulPositionArray[no]['obj'])noExisting--;
+				if(noExisting<boxSizeArray[no-1] || no==0){
+					dragDropIndicator.style.left = ul_leftPos + tmpOffsetX + 'px';
+					var subLi = ulPositionArray[no]['obj'].getElementsByTagName('LI');
+					
+					var clonedItemAllreadyAdded = false;
+					if(cloneSourceItems && !cloneAllowDuplicates){
+						for(var liIndex=0;liIndex<subLi.length;liIndex++){
+							if(contentToBeDragged.id == subLi[liIndex].id)clonedItemAllreadyAdded = true;
+						}
+						if(clonedItemAllreadyAdded)continue;
+					}
+					
+					for(var liIndex=0;liIndex<subLi.length;liIndex++){
+						var tmpTop = getTopPos(subLi[liIndex]);
+						if(!indicateDestionationByUseOfArrow){
+							if(y<tmpTop){
+								destinationObj = subLi[liIndex];
+								indicateDestinationBox.style.display='block';
+								subLi[liIndex].parentNode.insertBefore(indicateDestinationBox,subLi[liIndex]);
+								break;
+							}
+						}else{							
+							if(y<tmpTop){
+								destinationObj = subLi[liIndex];
+								dragDropIndicator.style.top = tmpTop + tmpOffsetY - Math.round(dragDropIndicator.clientHeight/2) + 'px';
+								dragDropIndicator.style.display='block';
+								break;
+							}	
+						}					
+					}
+					
+					if(!indicateDestionationByUseOfArrow){
+						if(indicateDestinationBox.style.display=='none'){
+							indicateDestinationBox.style.display='block';
+							ulPositionArray[no]['obj'].appendChild(indicateDestinationBox);
+						}
+						
+					}else{
+						if(subLi.length>0 && dragDropIndicator.style.display=='none'){
+							dragDropIndicator.style.top = getTopPos(subLi[subLi.length-1]) + subLi[subLi.length-1].offsetHeight + tmpOffsetY + 'px';
+							dragDropIndicator.style.display='block';
+						}
+						if(subLi.length==0){
+							dragDropIndicator.style.top = ul_topPos + arrow_offsetY + 'px'
+							dragDropIndicator.style.display='block';
+						}
+					}
+					
+					if(!destinationObj)destinationObj = ulPositionArray[no]['obj'];
+					mouseoverObj = ulPositionArray[no]['obj'].parentNode;
+					mouseoverObj.className='mouseover';
+					return;
+				}
+			}
+		}
+	}
+	
+	/* End dragging 
+	Put <LI> into a destination or back to where it came from.
+	*/	
+	function dragDropEnd(e)
+	{
+		if(dragTimer==-1)return;
+		if(dragTimer<10){
+			dragTimer = -1;
+			return;
+		}
+		dragTimer = -1;
+		if(document.all)e = event;	
+		
+		
+		if(cloneSourceItems && (!destinationObj || (destinationObj && (destinationObj.id=='allItems' || destinationObj.parentNode.id=='allItems')))){
+			contentToBeDragged.parentNode.removeChild(contentToBeDragged);
+		}else{	
+			
+			if(destinationObj){
+				if(destinationObj.tagName=='UL'){
+					destinationObj.appendChild(contentToBeDragged);
+				}else{
+					destinationObj.parentNode.insertBefore(contentToBeDragged,destinationObj);
+				}
+				mouseoverObj.className='';
+				destinationObj = false;
+				dragDropIndicator.style.display='none';
+				if(indicateDestinationBox){
+					indicateDestinationBox.style.display='none';
+					document.body.appendChild(indicateDestinationBox);
+				}
+				contentToBeDragged = false;
+				return;
+			}		
+			if(contentToBeDragged_next){
+				contentToBeDragged_src.insertBefore(contentToBeDragged,contentToBeDragged_next);
+			}else{
+				contentToBeDragged_src.appendChild(contentToBeDragged);
+			}
+		}
+		contentToBeDragged = false;
+		dragDropIndicator.style.display='none';
+		if(indicateDestinationBox){
+			indicateDestinationBox.style.display='none';
+			document.body.appendChild(indicateDestinationBox);
+			
+		}
+		mouseoverObj = false;
+		
+	}
+	
+	/* 
+	Preparing data to be saved 
+	*/
+	function saveDragDropNodes()
+	{
+		var saveString = "";
+		var uls = dragDropTopContainer.getElementsByTagName('UL');
+		for(var no=0;no<uls.length;no++){	// LOoping through all <ul>
+			var lis = uls[no].getElementsByTagName('LI');
+			for(var no2=0;no2<lis.length;no2++){
+				if(saveString.length>0)saveString = saveString + ";";
+				saveString = saveString + uls[no].id + '|' + lis[no2].id;
+			}	
+		}		
+		
+	//	document.getElementById('saveContent').innerHTML = '<h1>Ready to save these nodes:</h1> ' + saveString.replace(/;/g,';<br>') + '<p>Format: ID of ul |(pipe) ID of li;(semicolon)</p><p>You can put these values into a hidden form fields, post it to the server and explode the submitted value there</p>';
+		
+		
+		document.forms['myForm'].listOfItems.value = saveString; 
+	}
+	
+	function initDragDropScript()
+	{
+		dragContentObj = document.getElementById('dragContent');
+		dragDropIndicator = document.getElementById('dragDropIndicator');
+		dragDropTopContainer = document.getElementById('dhtmlgoodies_dragDropContainer');
+		document.documentElement.onselectstart = cancelEvent;;
+		var listItems = dragDropTopContainer.getElementsByTagName('LI');	// Get array containing all <LI>
+		var itemHeight = false;
+		for(var no=0;no<listItems.length;no++){
+			listItems[no].onmousedown = initDrag;
+			listItems[no].onselectstart = cancelEvent;
+			if(!itemHeight)itemHeight = listItems[no].offsetHeight;
+			if(MSIE && navigatorVersion/1<6){
+				listItems[no].style.cursor='hand';
+			}			
+		}
+		
+		var mainContainer = document.getElementById('dhtmlgoodies_mainContainer');
+		var uls = mainContainer.getElementsByTagName('UL');
+		itemHeight = itemHeight + verticalSpaceBetweenListItems;
+		for(var no=0;no<uls.length;no++){
+			uls[no].style.height = itemHeight * boxSizeArray[no]  + 'px';
+		}
+		
+		var leftContainer = document.getElementById('dhtmlgoodies_listOfItems');
+		var itemBox = leftContainer.getElementsByTagName('UL')[0];
+		
+		document.documentElement.onmousemove = moveDragContent;	// Mouse move event - moving draggable div
+		document.documentElement.onmouseup = dragDropEnd;	// Mouse move event - moving draggable div
+		
+		var ulArray = dragDropTopContainer.getElementsByTagName('UL');
+		for(var no=0;no<ulArray.length;no++){
+			ulPositionArray[no] = new Array();
+			ulPositionArray[no]['left'] = getLeftPos(ulArray[no]);	
+			ulPositionArray[no]['top'] = getTopPos(ulArray[no]);	
+			ulPositionArray[no]['width'] = ulArray[no].offsetWidth;
+			ulPositionArray[no]['height'] = ulArray[no].clientHeight;
+			ulPositionArray[no]['obj'] = ulArray[no];
+		}
+		
+		if(!indicateDestionationByUseOfArrow){
+			indicateDestinationBox = document.createElement('LI');
+			indicateDestinationBox.id = 'indicateDestination';
+			indicateDestinationBox.style.display='none';
+			document.body.appendChild(indicateDestinationBox);
+
+			
+		}
+	}
+	
+	window.onload = initDragDropScript;
+	</script>
+	
+	<script language="javascript">
+
+function ajaxFunction(id)
+{
+var xmlHttp;
+try
+  {
+  // Firefox, Opera 8.0+, Safari
+  xmlHttp=new XMLHttpRequest();
+  }
+catch (e)
+  {
+  // Internet Explorer
+  try
+    {
+    xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+    }
+  catch (e)
+    {
+    try
+      {
+      xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    catch (e)
+      {
+      alert("Your browser does not support AJAX!");
+      return false;
+      }
+    }
+  }
+  xmlHttp.onreadystatechange=function()
+    {
+    if(xmlHttp.readyState==4)
+      {
+	  var container = document.getElementById("dhtmlgoodies_listOfItems");
+		container.innerHTML = xmlHttp.responseText;
+		
+		initDragDropScript();
+		
+      }
+    }
+  xmlHttp.open("GET","get_stories.asp?id=" + document.form1.tag_id.value,true);
+  xmlHttp.send(null);
+  
+  }
+  
+  
+  
+///////////////////// 
+</script>
+
+</head>
+ 
+<table width="100%" border="0" cellspacing="0" cellpadding="0" name="parent">
+        <tr> 
+          <td width="20%" valign="top">
+		    
+<form>
+<select name="cases" class="dropdown_s" id="cases" onchange="location.href=this.options[this.selectedIndex].value" style="padding: 5px">
+
+<option  value="index.asp?case_id=119">A Newsroom Divided: Kenya, the Election Crisis, and the Nation Media Group</option>
+
+<option  value="index.asp?case_id=85">A Woman's Place? Photojournalist Lynsey Addario in Libya</option>
+
+<option  value="index.asp?case_id=23">After the Storms: The South Florida <i>Sun-Sentinel</i> Investigates FEMA</option>
+
+<option  value="index.asp?case_id=118">AllNovaScotia.com: Success or Anomaly?</option>
+
+<option  value="index.asp?case_id=109">¿Amigo o enemigo? Wikileaks y the Guardian </option>
+
+<option  value="index.asp?case_id=17">The Bakersfield <i>Californian</i> and Blogging the Courtroom</option>
+
+<option  value="index.asp?case_id=127">From Compstat to Gov 2.0 Big Data in New York City Management</option>
+
+<option  value="index.asp?case_id=36">But is it News? The <i>New York Times</i> and the International Freedom Center</option>
+
+<option  value="index.asp?case_id=67">Buy It or Make It? The <i>Charlotte Observer</i> and the Associated Press</option>
+
+<option  value="index.asp?case_id=90">Community Savings, or Community Threat? California Policy for Ill and Elderly Inmates</option>
+
+<option  value="index.asp?case_id=111">Can Investigative Journalism Pay?: <i>InvestigateWest</i> and the Nonprofit Model</option>
+
+<option  value="index.asp?case_id=66">Caricatured: <i>Le Monde</i> and the Mohammed Cartoons</option>
+
+<option  value="index.asp?case_id=142">Catalyze Without Offense: <em>Daily Nation Living Magazine</em> and the "Laura" Story</option>
+
+<option  value="index.asp?case_id=15">Charting a Course for Change: Transforming the Albany <i>Times Union </i>in a Wired World</option>
+
+<option  value="index.asp?case_id=132">Chasing the Community Newspaper Rainbow: The <em>Whiteville News Reporter</em> and the Digital Age</option>
+
+<option  value="index.asp?case_id=12">Chemical Fallout: The Milwaukee <i>Journal Sentinel</i> and the BPA Story</option>
+
+<option  value="index.asp?case_id=57">Conflicted: The <i>New York Times</i> and the Bias Question</option>
+
+<option  value="index.asp?case_id=147">Covert Activity: the <em>Washington Post</em>, Edward Snowden and the National Security Agency</option>
+
+<option  value="index.asp?case_id=112">Credible Voice: WHO-Beijing and the SARS Crisis</option>
+
+<option  value="index.asp?case_id=19">Crowdsourcing: Promise or Hazard? Part A: Debate at the Fort Myers, FL, <i>News-Press</i></option>
+
+<option  value="index.asp?case_id=20">Crowdsourcing at the Fort Myers, FL, <i>News-Press</i> Part B: "Help Us Investigate"</option>
+
+<option  selected="selected"  value="index.asp?case_id=116">Cumulative or Discrete Numbers: How Should <em>Bloomberg</em> Measure the Bailout?</option>
+
+<option  value="index.asp?case_id=29">Digital Deadline: The St. Louis <i>Post-Dispatch</i> and the Kirkwood Shooting</option>
+
+<option  value="index.asp?case_id=69">Dissonance: The Cleveland <i>Plain Dealer</i> and its Classical Music Critic</option>
+
+<option  value="index.asp?case_id=114">The Elusive Tuberculosis Case: The CDC and Andrew Speaker</option>
+
+<option  value="index.asp?case_id=40">Elusive Story: The <i>Chicago Tribune</i> Examines &quot;No Child Left Behind&quot;</option>
+
+<option  value="index.asp?case_id=31">Elusive Story (dead)</option>
+
+<option  value="index.asp?case_id=130">Fighting for Equality in Education: Student Activism in Post-apartheid South Africa</option>
+
+<option  value="index.asp?case_id=113">Evacuate or Stay? Northshore LIJ and Hurricane Sandy</option>
+
+<option  value="index.asp?case_id=53">The Facebook Conundrum: The New Haven <i>Independent</i> and the Annie Le Murder</option>
+
+<option  value="index.asp?case_id=126">Fighting Blackmail: Khadija Ismayilova and Azerbaijan’s First Family</option>
+
+<option  value="index.asp?case_id=70">Friend or foe? WikiLeaks and the <i>Guardian</i></option>
+
+<option  value="index.asp?case_id=16">From Concept to Story: <i>Time</i> Magazine and "America at 300 Million"</option>
+
+<option  value="index.asp?case_id=2"><i>Frontline</i>'s "The Last Abortion Clinic": What's Fair in a Video World?</option>
+
+<option  value="index.asp?case_id=30">God and Darwin: The <i>York Daily Record</i> and the Intelligent Design Trial</option>
+
+<option  value="index.asp?case_id=84">Grow Your Own? Rice Self-sufficiency in Timor-Leste</option>
+
+<option  value="index.asp?case_id=124">Côte Sud Initiative: Integrated Development in Haiti</option>
+
+<option  value="index.asp?case_id=110">Higher Truth or Just the Facts? <i>Hell and Back Again</i></option>
+
+<option  value="index.asp?case_id=21">Integrity on Deadline: ABC News and the Duke Lacrosse Photographs</option>
+
+<option  value="index.asp?case_id=55">Into the Breach: Should Student Journalists Save Local Political Reporting?</option>
+
+<option  value="index.asp?case_id=68">The Jury is Out: The <i>Long Beach Post</i> and Online Local News</option>
+
+<option  value="index.asp?case_id=148">Just Enough Alarm: GlobalPost and the Syrian Chemical Attack S</option>
+
+<option  value="index.asp?case_id=117">Land Grab or Responsible Development? Oil Palm Concessions in Liberia</option>
+
+<option  value="index.asp?case_id=56">Legal Jeopardy: Clar&iacute;n Group and the Kirchners</option>
+
+<option  value="index.asp?case_id=24">A Life on the Line: The <i>Christian Science Monitor</i> and Jill Carroll</option>
+
+<option  value="index.asp?case_id=37">A Matter of Opinion: The <i>Oregonian</i> Editorial Board and Sam Adams </option>
+
+<option  value="index.asp?case_id=134">Merging Two Worlds?: Reston Dental Arts and American Dental Partners</option>
+
+<option  value="index.asp?case_id=92">Mission vs Safety: OCHA Somalia and the Baidoa Raid</option>
+
+<option  value="index.asp?case_id=18">New England Cable News and the Terry Glenn Story</option>
+
+<option  value="index.asp?case_id=9">New England Cable News and the Terry Glenn Story (Video)</option>
+
+<option  value="index.asp?case_id=28">News or Rumor? <i>Politico</i> and the Edwards Affair </option>
+
+<option  value="index.asp?case_id=51">Not for Profit? The <i>Voice of San Diego</i> Experiment</option>
+
+<option  value="index.asp?case_id=50">&iquest;Periodistas o polic&iacute;as? CONTACTO y la b&uacute;squeda de Paul Schaefer</option>
+
+<option  value="index.asp?case_id=128">Public-Private Partnerships for Green Space in NYC</option>
+
+<option  value="index.asp?case_id=86">Personal Foul? <i>Deadspin</i> and an Iconic Athlete</option>
+
+<option  value="index.asp?case_id=61">Privacidad e Inter&eacute;s P&uacute;blico: La Evidencia Contra Ivins. Segunda Parte.</option>
+
+<option  value="index.asp?case_id=60">Privacidad y el Inter&eacute;s P&uacute;blico: Frederick, MD, <i>News-Post</i> y la Historia de Bruce Ivins. Primera Parte.</option>
+
+<option  value="index.asp?case_id=27">Privacy and the Public Interest: Frederick, MD, <i>News-Post</i> and the Bruce Ivins Story</option>
+
+<option  value="index.asp?case_id=35">Privacy and the Public Interest. Part B: The Case Against Ivins (DEAD)</option>
+
+<option  value="index.asp?case_id=136">Process and Politics: Chinalco and the Resettlement of Morococha</option>
+
+<option  value="index.asp?case_id=25">Public Death, Private Life: Army Major Alan Rogers and the <i> Washington Post</i></option>
+
+<option  value="index.asp?case_id=121">Public Service or Illegal Act? The <i>Weekly Mail</i> and Bugging Staal Burger</option>
+
+<option  value="index.asp?case_id=135">Publishing Pollution Data in China: Ma Jun and the Institute of Public and Environmental Affairs</option>
+
+<option  value="index.asp?case_id=120">Radio Buddu and the Uganda Anti-Homosexuality Bill</option>
+
+<option  value="index.asp?case_id=83">Rating Teachers: a Job for Journalists? The <i>Los Angeles Times</i> and "Value-Added" Analysis</option>
+
+<option  value="index.asp?case_id=115">Reportear una Verdad Explosiva: Boston Globe y los Abusos Sexuales  en la Iglesia Católica</option>
+
+<option  value="index.asp?case_id=49">Reporters or cops? CONTACTO and the search for Paul Schaefer</option>
+
+<option  value="index.asp?case_id=14">Reporting an Explosive Truth: The <i>Boston Globe</i> and Sexual Abuse in the Catholic Church </option>
+
+<option  value="index.asp?case_id=22">Reputations to Lose: BBC versus the Blair Government</option>
+
+<option  value="index.asp?case_id=38">Risky Business: John Harris, Jim VandeHei, and <i>Politico</i> Part A</option>
+
+<option  value="index.asp?case_id=39">Risky Business: John Harris, Jim VandeHei, and <i>Politico</i> Part B: A Winning Model?</option>
+
+<option  value="index.asp?case_id=129">Salvation or Mirage? The <em>New York Times</em> Paywall</option>
+
+<option  value="index.asp?case_id=125">Scientific Method in the Real World: Experience Corps and the Johns Hopkins Study</option>
+
+<option  value="index.asp?case_id=123">Seeking Partners for Press Freedom Media Council of Tanzania and DEFIR</option>
+
+<option  value="index.asp?case_id=1">Settle or fight? <i> Far Eastern Economic Review </i> and Singapore</option>
+
+<option  value="index.asp?case_id=146">Swaziland, HIV and Option B+: What Can We Afford?</option>
+
+<option  value="index.asp?case_id=33">Terror or Accident? <i>Newsday</i> and the Crash of American Airlines Flight 587</option>
+
+<option  value="index.asp?case_id=34">Terror or Accident? <i>Newsday</i> and the Crash of American Airlines Flight 587 (Video)</option>
+
+<option  value="index.asp?case_id=133">The Islanders and the Scientists: Post-tsunami Aid in the Nicobars</option>
+
+<option  value="index.asp?case_id=108">Truthiness: <i>This American Life</i> and the Monologist</option>
+
+<option  value="index.asp?case_id=131">Tortoise or Hare? Fundación Carvajal and Buenaventura</option>
+
+<option  value="index.asp?case_id=122">Spike or Suffer? <i>Jamhuri</i> and the Bribe Offer</option>
+
+<option  value="index.asp?case_id=62">Una Historia Esquiva: El <i>Chicago Tribune</i> y la ley &quot;Que Ning&uacute;n Ni&ntilde;o Quede Atr&aacute;s&quot;</option>
+
+<option  value="index.asp?case_id=54">Voices Behind Bars: National Public Radio and Angola State Prison</option>
+
+<option  value="index.asp?case_id=91">Voluntary or Regulated? The Trans Fat Campaign in New York City</option>
+
+<option  value="index.asp?case_id=87">When BEST Intentions Go Awry: Arsenic Mitigation in Bangladesh</option>
+
+<option  value="index.asp?case_id=43">When the story is us: <i>Miami Herald</i>, <i>Nuevo Herald</i> and Radio Mart&iacute;</option>
+
+<option  value="index.asp?case_id=106">Words of the Dying: CHCH TV and Constable Garrett Styles</option>
+
+<option  value="index.asp?case_id=59">Worth a Thousand Words: The Associated Press and Lance Corporal Joshua Bernard</option>
+
+
+</select>
+<a target="_new" style="text-decoration:none" href="www/index.asp%3Fcase_id=116.html"><input type="button" value="View Case" style="width:70px" class="button"/></a>
+</form>
+<div style="margin-top:20px"></div>
+<a href="index.asp%3Fcase_id=116.html"><img border="0"  height="40" src="images/dashboard.png" /></a>
+<div class="dropshadow1">
+<p>
+<table  width="150" border="0" cellpadding="5" cellspacing="0">
+      
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+       <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>New:</i></td>
+      </tr>
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="case.asp%3Faction=New&amp;case_id=116.html" class="link_txt">Case &raquo;</a></td>
+      </tr>
+
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="page.asp%3Faction=New&amp;case_id=116.html" class="link_txt">Page &raquo;</a></td>
+      </tr>
+    
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="bio.asp%3Faction=New&amp;case_id=116.html" class="link_txt">Biography &raquo;</a></td>
+      </tr>
+      
+      
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="news_controller.asp%3Faction=new&amp;case_id=116.html" class="link_txt">News &raquo;</a></td>
+    </tr>
+
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="video_group.asp%3Faction=New&amp;case_id=116.html" class="link_txt">Video Group &raquo;</a></td>
+      </tr>
+      
+        <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="new_category.asp%3Fcase_id=116.html" class="link_txt">Category &raquo;</a></td>
+      </tr>
+   
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="https://casestudies.jrn.columbia.edu/casestudy/new_course.asp" class="link_txt"></a></td>
+      </tr>
+	
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF">		</td>
+      </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Upload:</i></td>
+      </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_photo.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Photo &raquo;</a></td>
+    </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_audio.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Audio &raquo;</a></td>
+       </tr>
+      <!-- <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="FlashController.asp?case_id=116&amp;action=New" class="link_txt">Flash &raquo;</a></td>
+       </tr>-->
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_video.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Video &raquo;</a></td>
+       </tr>
+    
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="upload_pdf.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">PDF &raquo;</a></td>
+       </tr>
+	   
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF">		</td>
+      </tr>
+	       <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Video Group:</i></td>
+      </tr>
+	  
+	  
+        
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+	      <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading">&nbsp;</td>
+    </tr>	   
+
+
+	   <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Home Page:</i></td>
+      </tr> 
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="featured_cases.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Featured Cases &raquo;</a></td>
+       </tr>
+         
+          <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="featured_news.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Featured News &raquo;</a></td>
+       </tr>
+         
+       
+          <tr bgcolor="#CCCCCC"  class="content_txt">
+            <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading">&nbsp;</td>
+          </tr>
+        <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading"><i>Sales Tracking:</i></td>
+      </tr> 
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="assign_school.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Assign School &raquo;</a></td>
+       </tr>
+       <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF"><a href="sales_report.asp%3Fcase_id=116&amp;action=New.html" class="link_txt">Sales Report &raquo;</a></td>
+       </tr>
+         
+          <tr bgcolor="#CCCCCC"  class="content_txt">
+         <td bgcolor="#FFFFFF">&nbsp;</td>
+       </tr>
+           
+	    <tr bgcolor="#CCCCCC"  class="content_txt">
+	      <td bgcolor="#FFFFFF" style="border-bottom:1px dotted #CCCCCC" class="heading">&nbsp;</td>
+    </tr>	   
+
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+        <td bgcolor="#FFFFFF"><a href="logout.asp.html" class="link_txt">&laquo; Logout</a></td>
+      </tr>
+      <tr bgcolor="#CCCCCC"  class="content_txt">
+      <td bgcolor="#FFFFFF">      </tr>
+</table>
+
+ 
+</div>
+   
+</td>
+          <td valign="top">
+  			<table width="80%" border="0" cellpadding="5" cellspacing="0">
+<tr>
+  <td valign="top">
+  <img border="0" src="images/icon_cases.png" /> &nbsp;&nbsp;<a href="cases.asp%3Fcase_id=116.html" class="link_txt">Cases</a></td>
+  <td valign="top"><img border="0" src="images/icon_story.png" />&nbsp;&nbsp; <a href="pages.asp%3Fcase_id=116.html" class="link_txt"> Pages </a></td>
+  <td valign="top"><img border="0" src="images/icon_profile.png" />&nbsp;&nbsp; <a href="bios.asp%3Fcase_id=116.html" class="link_txt">Bios </a></td>
+  <td valign="top"><img border="0" src="images/icon_category.png" />&nbsp;&nbsp; <a href="categories.asp%3Fcase_id=116.html" class="link_txt">Categories </a></td>
+  <td valign="top"><img border="0" src="images/icon_news.png" />&nbsp; <a href="news.asp%3Fcase_id=116.html" class="link_txt">News </a></td>
+
+  <td valign="top"><img border="0" src="images/icon_user.png" />&nbsp;&nbsp; <a href="customers_outside_faculty.asp%3Fcase_id=116.html" class="link_txt">Customers </a></td>
+    <td valign="top"> <img border="0" src="images/icon_design.png" /> &nbsp;&nbsp;<a href="themes.asp%3Fcase_id=116.html" class="link_txt">Themes </a></td>
+     <td valign="top"> <img border="0" src="images/icon_audio.png" /> &nbsp;&nbsp;<a href="multimedia.asp%3Fcase_id=116.html" class="link_txt">Media </a></td>
+
+    
+     <!-- 
+    <td align="right"><input type="text" size="15" name="textfield" />&nbsp;<img border="0" src="./images/icon_find.png" /></td>
+	-->
+</table>
+
+
+<br />			
+			<div id="dhtmlgoodies_dragDropContainer">
+
+	<div id="dhtmlgoodies_listOfItems">
+
+		<div style="overflow:scroll">
+			<p>Available Cases </p>		
+		    <ul id="allItems">
+			
+		
+			<li id="119">A Newsroom Divided</li>
+			
+		
+		
+			<li id="85">A Woman's Place?</li>
+			
+		
+		
+			<li id="23">After the Storms</li>
+			
+		
+		
+			<li id="118">AllNovaScotia.com: Success or Anomaly?</li>
+			
+		
+		
+			<li id="109">Amigo o enemigo?</li>
+			
+		
+		
+			<li id="17">Bakersfield</li>
+			
+		
+		
+			<li id="127">Big Data</li>
+			
+		
+		
+			<li id="36">But is it News?</li>
+			
+		
+		
+			<li id="67">Buy It or Make It?</li>
+			
+		
+		
+			<li id="90">CA prisoners</li>
+			
+		
+		
+			<li id="111">caninvestigatepay</li>
+			
+		
+		
+			<li id="66">Caricatured</li>
+			
+		
+		
+			<li id="142">Catalyze</li>
+			
+		
+		
+			<li id="15">Charting a Course for Change</li>
+			
+		
+		
+			<li id="132">Chasing the Community Newspaper Rainbow</li>
+			
+		
+		
+			<li id="12">Chemical Fallout</li>
+			
+		
+		
+			<li id="57">Conflicted</li>
+			
+		
+		
+			<li id="147">Covert Activity</li>
+			
+		
+		
+			<li id="112">credible voice</li>
+			
+		
+		
+			<li id="19">Crowdsourcing A</li>
+			
+		
+		
+			<li id="20">Crowdsourcing B</li>
+			
+		
+		
+			<li id="116">Cumulative or Discrete Numbers</li>
+			
+		
+		
+			<li id="29">Digital Deadline</li>
+			
+		
+		
+			<li id="69">Dissonace</li>
+			
+		
+		
+			<li id="114">elusive</li>
+			
+		
+		
+			<li id="40">Elusive Story</li>
+			
+		
+		
+			<li id="130">Equal Education</li>
+			
+		
+		
+			<li id="113">evacuate</li>
+			
+		
+		
+			<li id="53">Facebook Conundrum</li>
+			
+		
+		
+			<li id="126">Fighting Blackmail</li>
+			
+		
+		
+			<li id="70">Friend or foe?</li>
+			
+		
+		
+			<li id="16">From Concept to Story</li>
+			
+		
+		
+			<li id="2">Frontline</li>
+			
+		
+		
+			<li id="30">God and Darwin</li>
+			
+		
+		
+			<li id="84">Grow Your Own?</li>
+			
+		
+		
+			<li id="124">Haiti</li>
+			
+		
+		
+			<li id="110">higher truth</li>
+			
+		
+		
+			<li id="21">Integrity on Deadline</li>
+			
+		
+		
+			<li id="55">Into the Breach</li>
+			
+		
+		
+			<li id="68">Jury is Out</li>
+			
+		
+		
+			<li id="148">Just Enough Syria Global Post</li>
+			
+		
+		
+			<li id="117">Land Grab or Responsible Development?</li>
+			
+		
+		
+			<li id="56">Legal Jeopardy</li>
+			
+		
+		
+			<li id="24">Life on the Line</li>
+			
+		
+		
+			<li id="37">Matter of Opinion</li>
+			
+		
+		
+			<li id="134">Merging Two Worlds</li>
+			
+		
+		
+			<li id="92">mission vs safety</li>
+			
+		
+		
+			<li id="18">New England Cable News Text</li>
+			
+		
+		
+			<li id="9">New England Cable News Video</li>
+			
+		
+		
+			<li id="28">News or Rumor</li>
+			
+		
+		
+			<li id="51">Not for Profit?</li>
+			
+		
+		
+			<li id="50">P¿Periodistas o policías?</li>
+			
+		
+		
+			<li id="128">Parks</li>
+			
+		
+		
+			<li id="86">Personal Foul</li>
+			
+		
+		
+			<li id="61">Privacidad e Interés Público</li>
+			
+		
+		
+			<li id="60">Privacidad y el Interés Público</li>
+			
+		
+		
+			<li id="27">Privacy and the Public Interest</li>
+			
+		
+		
+			<li id="136">Process and Politics</li>
+			
+		
+		
+			<li id="25">Public Death, Private Life</li>
+			
+		
+		
+			<li id="121">Public Service or Illegal Act?</li>
+			
+		
+		
+			<li id="135">Publishing Pollution Data in China</li>
+			
+		
+		
+			<li id="120">Radio Buddu</li>
+			
+		
+		
+			<li id="83">Rating Teachers</li>
+			
+		
+		
+			<li id="115">Reportear una Verdad Explosiva</li>
+			
+		
+		
+			<li id="49">Reporters or cops?</li>
+			
+		
+		
+			<li id="14">Reporting an Explosive Truth</li>
+			
+		
+		
+			<li id="22">Reputations to Lose</li>
+			
+		
+		
+			<li id="38">Risky Business</li>
+			
+		
+		
+			<li id="39">Risky Business</li>
+			
+		
+		
+			<li id="129">Salvation or Mirage</li>
+			
+		
+		
+			<li id="125">Scientific Method</li>
+			
+		
+		
+			<li id="123">Seeking Partners</li>
+			
+		
+		
+			<li id="1">Settle or fight?</li>
+			
+		
+		
+			<li id="146">Swaziland</li>
+			
+		
+		
+			<li id="33">Terror or Accident?</li>
+			
+		
+		
+			<li id="34">Terror or Accident?</li>
+			
+		
+		
+			<li id="133">The Islanders and the Scientists: Post-tsunami Aid in the Nicobars</li>
+			
+		
+		
+			<li id="108">this american life</li>
+			
+		
+		
+			<li id="131">Tortoise or Hare?</li>
+			
+		
+		
+			<li id="122">TZ Bribery</li>
+			
+		
+		
+			<li id="62">Una Historia Esquiva</li>
+			
+		
+		
+			<li id="54">Voices Behind Bars</li>
+			
+		
+		
+			<li id="91">Voluntary or Regulated?</li>
+			
+		
+		
+			<li id="87">When BEST Intentions Go Awry</li>
+			
+		
+		
+			<li id="43">When the story is us</li>
+			
+		
+		
+			<li id="106">Words of the Dying</li>
+			
+		
+		
+			<li id="59">Worth a Thousand Words</li>
+			
+		
+		</ul>
+		</div>
+
+	</div>	
+	<div id="dhtmlgoodies_mainContainer">
+		<!-- ONE <UL> for each "room" -->
+		<div  style="height:500px;" >
+			<p>Mailman</p>
+			<ul id="box1">
+			
+					
+	
+				<li id="87">When BEST Intentions Go Awry</li>
+				
+			
+			
+	
+				<li id="90">CA prisoners</li>
+				
+			
+			
+	
+				<li id="91">Voluntary or Regulated?</li>
+				
+			
+			
+	
+				<li id="112">credible voice</li>
+				
+			
+							
+				
+				
+			
+			</ul>
+		</div>	
+		
+  </div>
+  
+  
+  
+  
+</div>
+<div id="footer">
+	<form name="myForm" method="post" action="https://casestudies.jrn.columbia.edu/casestudy/assign_school.asp" onsubmit="saveDragDropNodes()">
+<input type="hidden" name="id" value="">
+<input type="hidden" name="case_id" value="116">
+<input type="hidden" name="listOfItems" value="">
+<input class="button" type="submit"  value="Save" style="width:250px; height:80px" name="saveButton">
+</form> 
+</div>
+<ul id="dragContent"></ul>
+<div id="dragDropIndicator"><img src="https://casestudies.jrn.columbia.edu/casestudy/images/insert.gif"></div>
+<div id="saveContent"></div>
+			</td>
+        </tr>
+  </table>	
+ </td>
+  </tr>
+   
+</table>
+</form>

@@ -1,0 +1,158 @@
+body
+{
+	background-color: #fff;
+	font-family: serif;
+}
+
+a.photolink
+{
+	padding-right: 0;
+	background: #fff url(https://casestudies.jrn.columbia.edu/casestudy/www/layout/css_global/knightcase/none) center right no-repeat;
+}
+
+a.extlink
+{
+	padding-right: 0;
+	background: #fff url(https://casestudies.jrn.columbia.edu/casestudy/www/layout/css_global/knightcase/none) center right no-repeat;
+}
+
+a.pdflink
+{
+	padding-right: 0;
+	background: #fff url(https://casestudies.jrn.columbia.edu/casestudy/www/layout/css_global/knightcase/none) center right no-repeat;
+}
+
+#container
+{
+	width: 100%;
+	margin: auto;
+	padding: 0;
+	border: 0;
+	background: #fff url(https://casestudies.jrn.columbia.edu/casestudy/www/layout/css_global/knightcase/none) top left repeat-y;
+}
+
+#header
+{
+	height: auto !important;
+	width: 100%;
+	margin: auto;
+	padding: 0;
+	border: 0;
+	border-bottom: 1px solid #ccc;
+	overflow: hidden;
+	background: #fff url(https://casestudies.jrn.columbia.edu/casestudy/www/layout/css_global/knightcase/none) top left repeat-y !important;
+}
+
+#header table td,#header table tbody,#header table th, #header table tr
+{
+	vertical-align: top;
+	border: 0;
+	height: auto !important;
+}
+
+.site-name
+{
+	width: 100% !important;
+	margin:  0 !important;
+	padding: 0 0 0 0;
+	border: 0;
+	font: normal 1em "trebuchet ms", verdana, helvetica, arial, sans-serif !important;
+}
+
+.site-name span
+{
+	display: inline;
+}
+
+.site-name-hidden
+{
+	display: none;
+}
+
+.knightlogo, .ccnmtlfooter, #footer ul
+{
+	display: none;
+}
+
+.kcsi_logo
+{
+	height: auto !important;
+}
+
+.printlogo
+{
+	float: right;
+	display: inline;
+	margin:  0;
+	padding: 0;
+	border:0;
+}
+
+#primary_links,
+#secondary_links
+{
+	display: none !important;
+}
+
+#pagebody
+{
+	width: 100%;
+	border-top: 0;
+	margin: 0.5em 0;
+	padding: 0 0 0 0;
+	border: 0 !important;
+}
+
+#sidebar-left,
+#sidebar-right
+{
+	display: none !important;
+}
+
+#contentbody
+{
+	width: 97% !important;
+	border: 0;
+}
+
+.one-column
+{
+	width: 100% !important;
+}
+
+.two-column
+{
+	width: 100% !important;
+}
+
+#footer
+{
+	width: 100% !important;
+	height: auto;
+	margin: auto;
+	padding: 0;
+	border: 0;
+	border-top: 1px solid #ccc;
+	background: #fff url(https://casestudies.jrn.columbia.edu/casestudy/www/layout/css_global/knightcase/none) top left no-repeat;
+}
+
+#main
+{
+	font-size: 1em;
+	color: #000;
+}
+
+.node .content {
+  font-family: serif;
+}
+
+.breadcrumb, .tabs
+{
+	display: none;
+}
+
+#main .title
+{
+	font-size: 1.5em;
+	color: #000;
+}
