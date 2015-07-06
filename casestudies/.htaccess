@@ -1,5 +1,0 @@
-AuthType Basic
-AuthName "Restricted Access"
-AuthUserFile /www/data/ccnmtl/projects/mmt/passwd_dir/.htpasswd
-Require user ccnmtl
-
