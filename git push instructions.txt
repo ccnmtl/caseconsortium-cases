@@ -1,0 +1,23 @@
+Open new terminal
+
+cd /Library/WebServer/Documents/ccnmtl-caseconsortium
+
+# and, for completness, to pull down changes from the repo
+git pull
+
+# check what's modified
+git status
+
+# add a new file, to "stage" for commiting
+git add <FILENAME>
+
+# commit the file to my local git repository
+git commit -m'if i include the -m, the commit message comes from here instead of nano' 
+ 
+
+# or, if you want to edit your message in your editor 
+git commit 
+ 
+# push this up to the github.com/cul/ccnmtl-caseconsortium repo
+git push 
+
