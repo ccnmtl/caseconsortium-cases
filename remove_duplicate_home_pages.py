@@ -16,31 +16,41 @@ def search_folders(file_name):
     dup_homepage = "case_id_\d+_id_\d+.html"
     for path, subdirs, files in os.walk(file_name):
         if path.endswith("layout"):
+            '''For each template directory'''
             files.sort()
             potential_dups = []
+            home_page = ""
+            duplicate_page = ""
             for f_name in files:
+                '''Sort filenames'''
                 homematchObj = re.match(orig_homepage, f_name)
                 dupmatchObj = re.match(dup_homepage, f_name)
                 if homematchObj:
-                    # print "match found for homepage file: "
-                    print f_name
+                    home_page = f_name
                 else:
                     pass
-                    # print "Not a homepage file"
-                    # print f_name
                 if dupmatchObj:
-                    # print "match found duplicate homepage file: "
-                    print f_name[:-5].split('_')[4]
-                    potential_dups.append(f_name[:-5].split('_')[4])
-                    temp = potential_dups[0]
-                    for each in potential_dups:
-                        if each < temp:
-                            temp = each
-                    print "lowest value file is"
-                    print temp
-                        
+                    potential_dups.append(f_name)
+                    # call(["git", "rm", file_path])
                 else:
                     pass
+            temp = potential_dups[0][:-5].split('_')[4]
+            '''Get first of the possible home page duplicates to compare the others to'''
+            for each in potential_dups:
+                '''Go over potential duplicates and find the homepage'''
+                test_num = each[:-5].split('_')[4]
+                if test_num < temp:
+                    temp = test_num
+            # print temp
+            ns = home_page.split('.html')[0]
+            ns = str(ns) + '_id_' + str(temp) + '.html'
+            duplicate_page = ns
+            print "duplicate_page is"
+            print duplicate_page
+            print "home_page is"
+            print home_page
+
+            #call(["git", "rm", file_path])
                     # print "Not homepage duplicate"
                     # print f_name
                     
