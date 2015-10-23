@@ -31,7 +31,6 @@ def search_folders(file_name):
                     pass
                 if dupmatchObj:
                     potential_dups.append(f_name)
-                    # call(["git", "rm", file_path])
                 else:
                     pass
             temp = potential_dups[0][:-5].split('_')[4]
@@ -49,6 +48,20 @@ def search_folders(file_name):
             print duplicate_page
             print "home_page is"
             print home_page
+            dup_path = os.path.join(path, duplicate_page)
+            print "dup_path is"
+            print dup_path
+            call(["git", "rm", dup_path])
+            for f_name in files:
+                '''Go over all files again and look for references to the duplicate page and remove them'''
+                if "case_id_" in f_name:
+                    file_path = os.path.join(path, f_name)
+                    # print "Scaning file " + str(file_path)
+                    newfile = open(file_path, 'r+')
+                    for line in fileinput.input(file_path):
+                        newfile.write(line.replace(duplicate_page, home_page))
+                    newfile.close()
+            
 
             #call(["git", "rm", file_path])
                     # print "Not homepage duplicate"
