@@ -43,15 +43,20 @@ def search_folders(file_name):
             ns = home_page.split('.html')[0]
             ns = str(ns) + '_id_' + str(temp) + '.html'
             duplicate_page = ns
+            dup_path = os.path.join(path, duplicate_page)
             call(["git", "rm", dup_path])
             for f_name in files:
                 '''Go over all files again and look for references to the duplicate page and remove them'''
                 if "case_id_" in f_name:
+                    '''this will throw an error when it tries to open the deleted file --> put in try block'''
                     file_path = os.path.join(path, f_name)
-                    newfile = open(file_path, 'r+')
-                    for line in fileinput.input(file_path):
-                        newfile.write(line.replace(duplicate_page, home_page))
-                    newfile.close()
+                    try:
+                        newfile = open(file_path, 'r+')
+                        for line in fileinput.input(file_path):
+                            newfile.write(line.replace(duplicate_page, home_page))
+                        newfile.close()
+                    except:
+                        pass
 
 
 search_folders(file_to_search)
