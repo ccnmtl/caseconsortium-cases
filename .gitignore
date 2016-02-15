@@ -3,3 +3,8 @@
 casestudies_copy
 *.flv
 ._.DS_Store
+.project
+.pydevproject
+.settings/
+Test2/
+TestCases/
