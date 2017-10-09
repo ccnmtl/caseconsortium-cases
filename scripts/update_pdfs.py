@@ -30,7 +30,7 @@ def update_pdfs(pdf_dir):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='Update PDF files.')
     parser.add_argument('--pdf-dir', help='location of the new PDF files')
     args = parser.parse_args()
 
